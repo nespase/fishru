@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fishtocli · рыба в консоли</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+            line-height: 1.6;
+            color: #2c3e50;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f8fafc;
+        }
+        h1 { font-size: 2.5em; margin-bottom: 0; }
+        h2 { font-size: 1.8em; margin-top: 2em; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+        .subtitle {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-top: 5px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        code {
+            background: #e2e8f0;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .terminal {
+            background: #0f172a;
+            color: #a5f3fc;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            margin: 30px 0;
+        }
+        .terminal-line { margin: 5px 0; }
+        .terminal-green { color: #4ade80; }
+        .terminal-blue { color: #38bdf8; }
+        .button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .button:hover { background: #2980b9; }
+        hr {
+            border: none;
+            border-top: 1px solid #cbd5e1;
+            margin: 40px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            text-align: left;
+        }
+        th { background: #e2e8f0; }
+    </style>
+</head>
+<body>
+    <h1>fishtocli</h1>
+    <div class="subtitle">Bash-скрипт для прогноза клёва прямо в терминале</div>
+
+    <p>Реальная погода с open-meteo, анализ перепадов давления и персональные вердикты для каждой рыбы.</p>
+    <p><strong>Не гадай — проверяй</strong></p>
+
+    <a href="https://github.com/nespase/fish2cli" class="button">GitHub</a>
+    <a href="#install" class="button" style="background: #2c3e50;">Установка</a>
+
+    <hr>
+
+    <h2>Возможности</h2>
+    <ul>
+        <li><strong>16 локаций</strong> — от Астрахани до Красноярска</li>
+        <li><strong>Реальная погода</strong> через open-meteo (без API-ключей)</li>
+        <li><strong>Умный анализ давления</strong> — скрипт помнит вчерашние показания</li>
+        <li><strong>7 видов рыб</strong> со своим характером: щука, судак, окунь, сазан, лещ, карась, сом</li>
+        <li><strong>Советы по приманкам и тактике</strong></li>
+        <li><strong>Учёт времени суток</strong> — ночные хищники не дремлют</li>
+        <li><strong>Цветной вывод</strong> в терминале</li>
+    </ul>
+
+    <h2>Пример вывода</h2>
+    <div class="terminal">
+        <div class="terminal-line">╔═══════════════════════════════════════════════════════════════════════════╗</div>
+        <div class="terminal-line">║  Астрахань | -2.7°C | Пасмурно | Ветер: Восточный (9.3 км/ч)             ║</div>
+        <div class="terminal-line">╚═══════════════════════════════════════════════════════════════════════════╝</div>
+        <div class="terminal-line"> </div>
+        <div class="terminal-line"><span class="terminal-green"> Щука:</span> Мамка охотится! Руки в ноги шел на реку! > Приманка: Воблеры минноу. Тактика: Агрессивный твичинг.</div>
+        <div class="terminal-line"><span class="terminal-blue"> Судак:</span> Он вчера выпил много — спит. > Приманка: Слаги. Тактика: Волочение.</div>
+        <div class="terminal-line"> Окунь: Полосатик прикинулся сдохшим. > Оснастка: Отводной поводок. Тактика: Деликатная игра.</div>
+        <div class="terminal-line"> Сазан: Спит красавец во гробу.... > Приманка: Мелкий поп-ап. Тактика: Поиск в ямах.</div>
+        <div class="terminal-line"> Лещ: Если и будет сегодня лещ — то точно не в виде рыбы. > Приманка: Мотыль. Оснастка: Тонкие поводки.</div>
+        <div class="terminal-line"> Карась: Зарылся в ил и грустит. > Приманка: Мотыль. Оснастка: Легкий поплавок.</div>
+        <div class="terminal-line"> Сом: Спят усталые сомики, сомик спит...</div>
+        <div class="terminal-line">--------------------------------------------------------</div>
+    </div>
+
+    <h2 id="install">Установка</h2>
+    <pre>git clone https://github.com/nespaset/fish2cli
+cd fish2cli
+chmod +x fish2cli.sh</pre>
+
+    <h3>Зависимости</h3>
+    <p>Скрипту нужны: curl, python3, bc</p>
+    <pre># Ubuntu/Debian
+sudo apt install curl python3 bc
+
+# Arch
+sudo pacman -S curl python bc
+
+# macOS
+brew install curl python bc
+
+# Windows
+# установите WSL: https://learn.microsoft.com/ru-ru/windows/wsl/install</pre>
+
+    <h3>Запуск</h3>
+    <pre>./fish2cli.sh</pre>
+
+    <h2>Логика работы</h2>
+    <table>
+        <tr><th>Рыба</th><th>Условия для активности</th></tr>
+        <tr><td>Щука</td><td>Падение давления или пасмурно → "Мамка охотится!"</td></tr>
+        <tr><td>Судак</td><td>Высокое давление (>1014) + ночь → ждет блесны</td></tr>
+        <tr><td>Окунь</td><td>Высокое давление (>1012) + ясно → дает жару</td></tr>
+        <tr><td>Сазан</td><td>Тепло (>15°C) + южный ветер → режим пылесоса</td></tr>
+        <tr><td>Лещ</td><td>Стабильное давление → ждет прикормки</td></tr>
+        <tr><td>Карась</td><td>Тепло (>12°C) → активен, холодно → грустит</td></tr>
+        <tr><td>Сом</td><td>Ночь → зверь, день → спит</td></tr>
+    </table>
+    <p>Давление кэшируется в /tmp/ — скрипт помнит прошлый запуск и реагирует на перепады.</p>
+
+    <h2>Список локаций</h2>
+    <pre> 1) Астрахань      2) Уфа          3) Салават      4) Стерлитамак
+ 5) Бирск          6) Екатеринбург 7) Янган-Тау    8) Челябинск
+ 9) Казань        10) Самара      11) Питер       12) Мурманск
+13) Тюмень        14) Сургут      15) Новосибирск 16) Красноярск</pre>
+
+    <h2>Проверка подлинности</h2>
+    <pre>sha256sum fish2cli.sh
+# Сравните с содержимым файла sha256 в репозитории</pre>
+
+<h2>Лицензия</h2>
+<p>MIT License · Copyright (c) 2026 nespaset</p>
+<p>
+    <a href="https://github.com/nespase/fish2cli/blob/main/LICENSE" style="color: #3498db; text-decoration: none;">
+        Полный текст лицензии на GitHub →
+    </a>
+</p>
+<p><strong>Че хотите — творите, но рыбалка должна быть удачной.</strong></p>
+
+    <hr>
+    <p style="text-align: center; color: #64748b;">fishtocli.ru · рыба в консоли, улов в садке</p>
+</body>
+</html>
